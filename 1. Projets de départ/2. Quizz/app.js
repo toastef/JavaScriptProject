@@ -20,7 +20,8 @@ function handelsubmit(e) {
     /*    console.log(radiobuttons);
         console.log(results)*/
 
-    showResult(results)
+    showResult(results);
+    addColors(results)
 }
 
 const titleResult = document.querySelector(".result h2")
@@ -84,5 +85,32 @@ function showResult(results) {
         default:
             titleResult.textContent = "Wops, cas innatendu.";
     }
+
+
 }
 
+const questions = document.querySelectorAll('.question-block'); // selsection des questions
+
+function addColors(results) {
+    results.forEach((response, index) => {
+        if(results[index]) {
+            questions[index].style.backgroundImage = "linear-gradient(to right, #a8ff78, #78ffd6)"
+        } else {
+            questions[index].style.backgroundImage = "linear-gradient(to right, #f5567b, #fd674c)"
+        }
+    })
+}
+
+const radioInputs = document.querySelectorAll("input[type=radio]")
+
+radioInputs.forEach(radioInputs =>radioInputs.addEventListener('input' , resetColor))
+// pour chaque radio input on rajoute un listener
+
+// on va récupérer l'index de notre question qui va être modifiée par l'utilisateur pour le remettre en back basic pour lui montrer qu'il retente bien sa chance
+function resetColor(e) {
+    const index = e.target.getAttribute("name").slice(1) -1;
+    const parentQuestionBlock = questions[index];
+
+    parentQuestionBlock.style.backgroundColor = '#f1f1f1';
+    parentQuestionBlock.style.backgroundImage = 'none';
+}
